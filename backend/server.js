@@ -4,6 +4,9 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+// Require Routes
+const booksRoutes = require('./routes/books');
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 
@@ -17,6 +20,7 @@ mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 const connection = mongoose.connection;
@@ -25,6 +29,7 @@ connection.once('open', () => {
 });
 
 // CONFIG ROUTES
+app.use('/books', booksRoutes);
 
 // START SERVER
 app.listen(PORT, () => {
